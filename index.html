@@ -1,10 +1,234 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <title>Kids Courses</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكان كورس الرياضيات اونلاين</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #ffffff, #006c35);
+            min-height: 100vh;
+            color: #333;
+        }
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #ffcc00;
+        }
+        .course-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffffff, #e8f5e8);
+            border: 2px solid #006c35;
+        }
+        .course-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 129, 53, 0.3);
+            border-color: #ffcc00;
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+        .quiz-option:hover {
+            background-color: #ffcc00;
+        }
+        .floating-symbol {
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .text-saudi-green { color: #006c35; }
+        .equations-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #006c35;
+        }
+        canvas {
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #e8f5e8, #ffffff);
+        }
+        button {
+            background: linear-gradient(135deg, #006c35, #008000);
+            color: #ffffff;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #004d2a, #006400);
+        }
+        @media (max-width: 768px) {
+            .grid-cols-1.md\\:grid-cols-3 {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <h1>Welcome to Kids Courses Website</h1>
-    <p>This is my first GitHub Pages site!</p>
+<body class="text-center">
+    <!-- Header -->
+    <header class="header py-6 px-4 sticky top-0 z-10">
+        <div class="flex items-center justify-between max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold text-saudi-green">مكان كورس الرياضيات اونلاين</h1>
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-calculator text-4xl text-saudi-green"></i>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#courses" class="text-gray-700 hover:text-saudi-green transition">الكورسات</a></li>
+                    <li><a href="#progress" class="text-gray-700 hover:text-saudi-green transition">التقدم</a></li>
+                    <li><a href="#contact" class="text-gray-700 hover:text-saudi-green transition">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="py-20 px-4 bg-gradient-to-r from-saudi-green via-#ffcc00 to-#ffffff text-white">
+        <img src="https://placehold.co/800x400" alt="مشهد تعليمي سعودي لطفولي يظهر أطفال سعوديين يتعلمون الرياضيات اونلاين مع أرقام وأشكال متناثرة حول مسجد وحديقة ملونة في جو سعودي تفاعلي وممتع" class="mx-auto mb-8 rounded-2xl shadow-lg w-full max-w-4xl" />
+        <h2 class="text-5xl font-bold mb-4">مكانك المخصص لكورس الرياضيات اونلاين!</h2>
+        <p class="text-xl mb-8">تعلم واستكشف عالم الرياضيات بطريقة تفاعلية وممتعة هنا عبر الإنترنت!</p>
+        <button onclick="scrollToCourses()" class="px-8 py-4 rounded-full text-xl font-semibold shadow-lg transition transform hover:scale-105">ابدأ الكورس!</button>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-20 px-4 bg-white">
+        <h2 class="text-4xl font-bold mb-12 text-saudi-green">كورسات الرياضيات</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Course 1: Addition -->
+            <div class="course-card p-6 shadow-lg">
+                <i class="fas fa-plus text-6xl text-saudi-green mb-4"></i>
+                <h3 class="text-2xl font-bold mb-4 text-saudi-green">كورس الجمع</h3>
+                <p class="mb-4">تعلم الجمع من الأرقام الصغيرة إلى الكبيرة بأمثلة تفاعلية.</p>
+                <button onclick="openAdditionCourse()" class="w-full py-2 rounded-full">ابدأ الكورس</button>
+                <div id="addition-course" class="hidden mt-6">
+                    <img src="https://placehold.co/200x100" alt="صورة توضيحية لارقام زرقاء وخضراء تجمع مع رموز الجمع اللامعة في تصميم لطفولي سعودي ممتع" class="mx-auto mb-4 rounded-lg" />
+                    <p class="equations-display">مثال: 1 + 1 = 2</p>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button class="quiz-option p-2" onclick="checkAddition(2, 2)">2</button>
+                        <button class="quiz-option p-2" onclick="checkAddition(3, 2)">3</button>
+                        <button class="quiz-option p-2" onclick="checkAddition(1, 2)">1</button>
+                        <button class="quiz-option p-2" onclick="checkAddition(4, 2)">4</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Course 2: Subtraction -->
+            <div class="course-card p-6 shadow-lg">
+                <i class="fas fa-minus text-6xl text-saudi-green mb-4"></i>
+                <h3 class="text-2xl font-bold mb-4 text-saudi-green">كورس الطرح</h3>
+                <p class="mb-4">استكشف الطرح بألعاب ورسومات سعودية ممتعة.</p>
+                <button onclick="openSubtractionCourse()" class="w-full py-2 rounded-full">ابدأ الكورس</button>
+                <div id="subtraction-course" class="hidden mt-6">
+                    <canvas id="subtraction-canvas" width="200" height="100"></canvas>
+                    <p class="equations-display mt-4">مثال: 5 - 2 = 3</p>
+                </div>
+            </div>
+            <!-- Course 3: Shapes and Geometry -->
+            <div class="course-card p-6 shadow-lg">
+                <i class="fas fa-shapes text-6xl text-saudi-green mb-4"></i>
+                <h3 class="text-2xl font-bold mb-4 text-saudi-green">كورس الأشكال والمساحات</h3>
+                <p class="mb-4">تعرف على الأشكال الهندسية وحساب المساحات بطريقة بصرية.</p>
+                <button onclick="openShapesCourse()" class="w-full py-2 rounded-full">ابدأ الكورس</button>
+                <div id="shapes-course" class="hidden mt-6">
+                    <canvas id="shapes-canvas" width="200" height="100"></canvas>
+                    <p class="equations-display mt-4">رسومات الأشكال!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress" class="py-20 px-4 bg-green-50">
+        <h2 class="text-4xl font-bold mb-12 text-saudi-green">متابعة التقدم</h2>
+        <div class="max-w-md mx-auto">
+            <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-#ffcc00">
+                <h3 class="text-xl mb-4">تقدمك في الكورس</h3>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                    <div class="bg-saudi-green h-4 rounded-full" style="width: 60%;"></div>
+                </div>
+                <p class="text-center">60% مكتمل! كمل الكورسات!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-gray-100">
+        <h2 class="text-4xl font-bold mb-12 text-saudi-green">اتصل بنا</h2>
+        <img src="https://placehold.co/500x300" alt="صورة صندوق بريد سعودي ودود مع مغلفات طابعات ذهبية وأنماط إسلامية ملونة في جو سعودي ممتع للأطفال" class="mx-auto mb-8 rounded-2xl shadow-lg" />
+        <p class="text-xl mb-8">لديك أسئلة عن كورس الرياضيات اونلاين؟ أرسل لنا!</p>
+        <form class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border-2 border-#ffcc00">
+            <input type="text" placeholder="اسمك" class="w-full mb-4 p-3 border-#ffcc00 border rounded" dir="rtl">
+            <input type="email" placeholder="بريدك" class="w-full mb-4 p-3 border-#ffcc00 border rounded" dir="ltr">
+            <textarea placeholder="رسالة" class="w-full mb-4 p-6 border-#ffcc00 border rounded" dir="rtl"></textarea>
+            <button type="submit" class="w-full py-2 rounded-full">أرسل!</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-saudi-green text-white py-6 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p>&copy; 2023 مكان كورس الرياضيات اونلاين. صنع بحب للأطفال السعوديين!</p>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToCourses() {
+            document.getElementById('courses').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openAdditionCourse() {
+            document.getElementById('addition-course').classList.toggle('hidden');
+        }
+
+        function openSubtractionCourse() {
+            document.getElementById('subtraction-course').classList.toggle('hidden');
+            const canvas = document.getElementById('subtraction-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffcc00';
+            ctx.fillRect(50, 40, 100, 20);
+        }
+
+        function openShapesCourse() {
+            document.getElementById('shapes-course').classList.toggle('hidden');
+            const canvas = document.getElementById('shapes-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#006c35';
+            ctx.fillRect(10, 30, 60, 40);
+            ctx.beginPath();
+            ctx.arc(150, 50, 30, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ffcc00';
+            ctx.fill();
+        }
+
+        function checkAddition(selected, correct) {
+            if (selected === correct) {
+                alert('رائع! صحيح!');
+            } else {
+                alert('حاول مرة أخرى!');
+            }
+        }
+
+        // Floating symbols animation
+        setInterval(() => {
+            const container = document.body;
+            const symbol = document.createElement('div');
+            symbol.className = 'floating-symbol text-4xl text-#ffcc00';
+            symbol.innerHTML = '<i class="fas fa-plus"></i>';
+            symbol.style.left = Math.random() * 100 + '%';
+            symbol.style.top = Math.random() * 50 + '%';
+            container.appendChild(symbol);
+            setTimeout(() => container.removeChild(symbol), 3000);
+        }, 3000);
+    </script>
 </body>
 </html>
+</content>
+</create_file> 
